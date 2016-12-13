@@ -1,13 +1,41 @@
-def make_alph_range(indices):
-    return [index - (index // 26) * 26 if index >= 26 else index for index in indices]
+def append_indices(indices):
+    extented_indices = indices
+    for index in indices:
+        extented_indices.append(index)
+    print(extended_indices)
+    return extended_indices
+
+def make_alph_range(indices): #or index if it's the latter case
+    if type(indices) is list:
+        return [index - (index // 26) * 26 if index >= 26 else index for index in indices]
+    elif type(indices) is int:
+        index = indices
+        if index >= 26:
+            return index - (index // 26) * 26
+        else: return index
+    #also the idea I'm too lazy to implement
+    #because I'm travelling and feeling sick in the stomach
+    #the function argument is called 'x' for simplicity
+    #now the code
+    #indices = []
+    #indices.append(x)
+    #return return [index - (index // 26) * 26 if index >= 26 else index for index in indices]
 
 def shift(word, key):
     alph = "abcdefghijklmnopqrstuvwxyz"
     key_indices = [alph.index(char) for char in key]
     word_indices = [alph.index(char) for char in word]
-    word_indices = make_alph_range(word_indices)
-    key_indices = make_alph_range(key_indices)
-    crypto = "".join([alph[index] for index in indices])
+    multipler = len(word) // len(key) + 1
+    while multipler > 0:
+        append_indices(key_indices)
+        multipler -= 1
+
+    crypto = []
+    for word_index in word_indices:
+        for key_index in key_indices:
+            print(make_alph_range(key_index + word_index), crypto)
+            crypto.append(alph[make_alph_range(key_index + word_index)])
+            break
     return crypto
 
 
