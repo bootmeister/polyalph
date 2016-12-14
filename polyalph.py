@@ -1,8 +1,11 @@
 def append_indices(indices):
-    extented_indices = indices
-    for index in indices:
-        extented_indices.append(index)
-    print(extended_indices)
+    ext_indices = indices
+    step = 0
+    stop = len(indices)
+    extended_indices = indices
+    while step < stop:
+        extended_indices.append(indices[step])
+        step += 1
     return extended_indices
 
 def make_alph_range(indices): #or index if it's the latter case
@@ -13,13 +16,7 @@ def make_alph_range(indices): #or index if it's the latter case
         if index >= 26:
             return index - (index // 26) * 26
         else: return index
-    #also the idea I'm too lazy to implement
-    #because I'm travelling and feeling sick in the stomach
-    #the function argument is called 'x' for simplicity
-    #now the code
-    #indices = []
-    #indices.append(x)
-    #return return [index - (index // 26) * 26 if index >= 26 else index for index in indices]
+
 
 def shift(word, key):
     alph = "abcdefghijklmnopqrstuvwxyz"
@@ -31,11 +28,11 @@ def shift(word, key):
         multipler -= 1
 
     crypto = []
+    key_index = 0
     for word_index in word_indices:
-        for key_index in key_indices:
-            print(make_alph_range(key_index + word_index), crypto)
-            crypto.append(alph[make_alph_range(key_index + word_index)])
-            break
+         crypto.append(alph[make_alph_range(key_indices[key_index] + word_index + 1)])
+         key_index += 1
+    print(crypto)
     return crypto
 
 
@@ -58,20 +55,24 @@ def isalpha(word):
             pass
     return not has_num
 
-print("""Sezar sifrelmesi:
-Lutfen bir kelime ve bir kaydirma sayisi saglayiniz.\n""")
+print("""Polialabetik Sifreleme:
+Lutfen bir kelime ve bir anahtar kelime saglayiniz.\n""")
 
-key = get_word("Anahtar: ")
+key = get_word("Anahtar Kelime: ")
 
-result = []
+results = []
 go_on = True
 while go_on is True:
     word = get_word("Kelime: ")
-    result.append(shift(word, key))
+    results.append(shift(word, key))
     while True:
         try:
             go_on = bool(int(input("Devam etmek icin herhangi bir sayiya,\nDurmak icin 0a basiniz: ")))
             break
         except ValueError:
             print("Lutfen sadece sayi giriniz!")
-print(" ".join(result))
+
+for end_word in results:
+    print(end=" ")
+    for char in end_word:
+        print(char,end="")
